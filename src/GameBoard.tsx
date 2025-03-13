@@ -45,10 +45,10 @@ export default function GameBoard() {
         }
       >
         <div className="absolute top-0 left-0 h-full w-full bg-black opacity-50" />
-        <div className="absolute bg-slate-700 p-4 text-zinc-300 border-[4px] border-zinc-300 flex justify-center flex-col">
+        <div className="absolute bg-light-background dark:bg-dark-background p-4 border-[4px] border-light-text dark:border-dark-text flex justify-center flex-col">
           <h3 className="text-2xl mb-2">GAME OVER !!!</h3>
           <button
-            className="border-[2px] border-zinc-300 p-2 bg-teal-800 hover:bg-teal-700"
+            className="border-[2px] text-light-text dark:text-dark-text p-2 bg-teal-800 hover:bg-teal-700"
             onClick={handleNewGameClick}
           >
             Play Again
@@ -58,7 +58,7 @@ export default function GameBoard() {
       <canvas
         height={GRID_PIXEL_DIMENSIONS.HEIGHT}
         width={GRID_PIXEL_DIMENSIONS.WIDTH}
-        className="canvas"
+        className="canvas border-[2px] border-light-text bg-slate-200 dark:border-dark-text dark:bg-dark-background"
       ></canvas>
       <SelectGrid />
     </div>

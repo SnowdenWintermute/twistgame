@@ -4,6 +4,12 @@ import { immer } from "zustand/middleware/immer";
 import { immerable, produce } from "immer";
 import { MutateState } from "./mutate-state";
 import { GameEventType } from "../game-event-manager";
+import { userOSIsSetToDarkMode } from "../utils";
+
+export enum Theme {
+  Dark,
+  Light,
+}
 
 export class GameState {
   [immerable] = true;
@@ -14,6 +20,7 @@ export class GameState {
   currentlyProcessingEventType: null | GameEventType = null;
   showDebug: boolean = false;
   currentLevel: number = 0;
+  theme: Theme = userOSIsSetToDarkMode() ? Theme.Dark : Theme.Light;
 
   constructor(
     public mutateState: MutateState<GameState>,

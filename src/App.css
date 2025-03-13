@@ -9,7 +9,7 @@
 .canvas {
   height: 500px;
   width: 500px;
-  background: rgb(223, 228, 232);
+  /* background: rgb(223, 228, 232); */
 
   display: block;
 }

@@ -16,7 +16,7 @@ export const SPECIAL_JEWEL_PULSING_ANIMATION_DURATION: Milliseconds = 1000;
 export const DISABLED_FLASH_TIMEOUT_DURATION: Milliseconds = 200;
 export const TIME_TO_TRANSLATE_ONE_PIXEL: Milliseconds = 2;
 export const MINIMUM_MATCH_LENGTH = 3;
-export const COUNTING_JEWEL_BASE_START_COUNT = 2;
+export const COUNTING_JEWEL_BASE_START_COUNT = 20;
 export const JEWEL_TYPE_CHANCES_BY_LEVEL: Record<JewelType, number> = {
   [JewelType.Normal]: 0,
   [JewelType.Fire]: 0,

@@ -154,3 +154,8 @@ export function getRandomHexColor(): string {
   const hexColor = `#${randomColor.toString(16).padStart(6, "0")}`;
   return hexColor;
 }
+
+export function userOSIsSetToDarkMode() {
+  const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  return isDarkMode;
+}

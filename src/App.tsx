@@ -8,8 +8,13 @@ import {
 import { TwistGame } from "./game";
 import GameBoard from "./GameBoard";
 import { enableMapSet } from "immer";
-import { useGameStore } from "./stores/game-store";
+import { Theme, useGameStore } from "./stores/game-store";
 import DebugDisplay from "./components/DebugDisplay";
+import { userOSIsSetToDarkMode } from "./utils";
+import DarkThemeIcon from "../public/dark-theme.svg?react";
+import LightThemeIcon from "../public/light-theme.svg?react";
+import HorizontalDivider from "./Divider";
+
 // for immer to be able to use map and set
 enableMapSet();
 
@@ -21,6 +26,11 @@ function App() {
   const showDebug = useGameStore().showDebug;
   const numJewelsRemoved = useGameStore().numJewelsRemoved;
   const currentLevel = useGameStore().currentLevel;
+  const theme = useGameStore().theme;
+
+  useEffect(() => {
+    const osIsDarkMode = userOSIsSetToDarkMode();
+  }, []);
 
   useEffect(() => {
     const jewelImageURLs = Object.values(JEWEL_COLOR_URLS);
@@ -34,17 +44,38 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-slate-700 h-screen text-zinc-300">
-      <div className="p-4 flex flex-col items-center justify-center">
-        <div className="h-[4px] w-full bg-zinc-300" />
-        <h1 className="text-zinc-300 text-3xl font-bold pt-2 pb-2">
-          twistgame (title TBD)
-        </h1>
-        <div className="h-[4px] w-full bg-zinc-300" />
+    <div
+      className={`${theme === Theme.Dark ? "dark" : "light"} h-screen text-theme bg-theme`}
+    >
+      <div className="p-4 flex flex-col items-center justify-center relative w-full">
+        <HorizontalDivider height={4} />
+        <div>
+          <h1 className="text-theme text-3xl font-bold pt-2 pb-2">
+            twistgame (title TBD)
+          </h1>
+
+          <div className="absolute right-4 top-1/2 -translate-y-1/2">
+            <button
+              onClick={() => {
+                mutateGameState((state) => {
+                  if (state.theme === Theme.Light) state.theme = Theme.Dark;
+                  else state.theme = Theme.Light;
+                });
+              }}
+            >
+              {theme === Theme.Dark ? (
+                <LightThemeIcon className="h-8 fill-dark-text stroke-dark-text" />
+              ) : (
+                <DarkThemeIcon className="h-8 fill-light-text stroke-light-text" />
+              )}
+            </button>
+          </div>
+        </div>
+        <HorizontalDivider height={4} />
       </div>
       <div className="flex justify-center">
         <div className="flex justify-center w-full max-w-[1080px] p-4 pt-0">
-          <div className="w-72 border-[3px] border-zinc-300 mr-2 p-2 pt-4">
+          <div className="w-72 border-[3px] border-theme mr-2 p-2 pt-4">
             <h3 className="text-2xl text-center">Score</h3>
             <h3 className="text-2xl text-center">{numJewelsRemoved}</h3>
             <h3 className="text-2xl text-center">Level</h3>
@@ -60,7 +91,7 @@ function App() {
               state.showDebug = !state.showDebug;
             });
           }}
-          className="border border-zinc-300 text-lg p-2"
+          className="border border-theme text-lg p-2"
         >
           {showDebug ? "hide" : "show"} debug
         </button>
