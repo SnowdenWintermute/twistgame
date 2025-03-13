@@ -11,6 +11,7 @@ import { JewelQuartet } from "./jewel-quartet";
 import SelectCircle from "./assets/selection-circle.svg?react";
 import { Point } from "./types";
 import { useGameStore } from "./stores/game-store";
+import { JewelType } from "./jewel/jewel-consts";
 
 interface SelectBoxProps {
   x: number;
@@ -20,6 +21,7 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [flashingDisabled, setFlashingDisabled] = useState(false);
   const flashingDisabledTimeoutRef = useRef<number>(null);
+  const mutateGameState = useGameStore().mutateState;
 
   const quartet = new JewelQuartet(
     new Point(selectBoxProps.x, selectBoxProps.y)
@@ -38,12 +40,26 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
     const { grid } = gameSingletonHolder.game;
     setIsHovered(false);
     grid.deselectAllJewels();
+
+    mutateGameState((state) => {
+      state.jewelTypesToDescribe = [];
+    });
   }
+
   function handleMouseEnter() {
     if (!gameSingletonHolder.game) return;
     const { grid } = gameSingletonHolder.game;
     quartet.selectJewels(grid);
     setIsHovered(true);
+    const jewels = quartet.getJewels(grid);
+    const typesDescribed: JewelType[] = [];
+    for (const jewel of jewels) {
+      if (typesDescribed.includes(jewel.jewelType)) continue;
+      typesDescribed.push(jewel.jewelType);
+    }
+    mutateGameState((state) => {
+      state.jewelTypesToDescribe = typesDescribed;
+    });
   }
 
   function handleMouseDown(e: React.MouseEvent) {

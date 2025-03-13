@@ -5,6 +5,7 @@ import { immerable, produce } from "immer";
 import { MutateState } from "./mutate-state";
 import { GameEventType } from "../game-event-manager";
 import { userOSIsSetToDarkMode } from "../utils";
+import { JewelType } from "../jewel/jewel-consts";
 
 export enum Theme {
   Dark,
@@ -21,6 +22,7 @@ export class GameState {
   showDebug: boolean = false;
   currentLevel: number = 0;
   theme: Theme = userOSIsSetToDarkMode() ? Theme.Dark : Theme.Light;
+  jewelTypesToDescribe: JewelType[] = [];
 
   constructor(
     public mutateState: MutateState<GameState>,

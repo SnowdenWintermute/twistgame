@@ -1,7 +1,7 @@
-export default function HorizontalDivider(props: { height: number }) {
+export default function HorizontalDivider(props: { extraStyles: string }) {
   return (
     <div
-      className={`h-[${props.height}px] w-full bg-light-background dark:bg-dark-background`}
+      className={`${props.extraStyles} w-full bg-light-text dark:bg-dark-text`}
     />
   );
 }

@@ -44,3 +44,13 @@ export const JEWEL_TYPE_STRINGS: Record<JewelType, string> = {
   [JewelType.Locked]: "Locked",
   [JewelType.MarkedLocked]: "MarkedLocked",
 };
+
+export const JEWEL_TYPE_TIPS: Record<JewelType, string> = {
+  [JewelType.Normal]: "",
+  [JewelType.Fire]: "",
+  [JewelType.Lightning]: "",
+  [JewelType.Counting]: "When a counting tile reaches zero, the game is over!",
+  [JewelType.Rock]: "Bats can not form matches.",
+  [JewelType.Locked]: "Locked tiles can not be rotated",
+  [JewelType.MarkedLocked]: "",
+};
