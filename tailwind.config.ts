@@ -20,7 +20,7 @@ const config: Config = {
           primary: "oklch(0.92 0.004 286.32)",
           accent: "oklch(0.442 0.017 285.786)",
           background: "oklch(0.21 0.006 285.885)",
-          text: "oklch(0.552 0.016 285.938)",
+          text: "oklch(0.871 0.006 286.286)",
           border: "oklch(0.552 0.016 285.938)",
           fill: "oklch(0.552 0.016 285.938)",
           stroke: "oklch(0.552 0.016 285.938)",

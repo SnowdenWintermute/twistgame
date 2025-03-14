@@ -143,6 +143,7 @@ export default function Settings() {
       <HotkeyButton
         className="absolute top-2 right-2 h-6 border border-theme p-1"
         hotkeys={["Escape"]}
+        disabled={!viewingSettings}
         onClick={() =>
           mutateGameState((state) => {
             state.viewingSettings = !state.viewingSettings;

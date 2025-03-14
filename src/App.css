@@ -13,20 +13,9 @@
 
   display: block;
 }
-.select-box {
-  background-color: transparent;
-  border: 0px;
-  position: relative;
-  /* &:hover { */
-  /* border: 5px solid white; */
-  /* } */
-}
 .all-grids {
   position: relative;
   width: fit-content;
-}
-.select-grid {
-  position: absolute;
 }
 .dialog {
   position: absolute;

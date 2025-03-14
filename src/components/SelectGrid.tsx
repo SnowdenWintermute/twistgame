@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { gameSingletonHolder } from "./App";
-import "./App.css";
+import { gameSingletonHolder } from "../App";
+import "../App.css";
 import {
   DISABLED_FLASH_TIMEOUT_DURATION,
   JEWEL_DIAMETER,
   SELECT_GRID_SIZE,
-} from "./app-consts";
-import { QuartetRotationGameEvent } from "./game-event-manager/jewel-rotation";
-import { JewelQuartet } from "./jewel-quartet";
-import SelectCircle from "./assets/selection-circle.svg?react";
-import { Point } from "./types";
-import { useGameStore } from "./stores/game-store";
-import { JewelType } from "./jewel/jewel-consts";
+} from "../app-consts";
+import { QuartetRotationGameEvent } from "../game-event-manager/jewel-rotation";
+import { JewelQuartet } from "../jewel-quartet";
+import SelectCircle from "../assets/selection-circle.svg?react";
+import { Point } from "../types";
+import { useGameStore } from "../stores/game-store";
+import { JewelType } from "../jewel/jewel-consts";
 
 interface SelectBoxProps {
   x: number;
@@ -48,6 +48,7 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
 
   function handleMouseEnter() {
     if (!gameSingletonHolder.game) return;
+    console.log("mouse netered");
     const { grid } = gameSingletonHolder.game;
     quartet.selectJewels(grid);
     setIsHovered(true);
@@ -86,15 +87,9 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
     );
   }
 
-  // const { x, y } = selectBoxProps;
-  // const isSideEdge = x === 0 || x === GRID_CELL_DIMENSIONS.COLUMNS - 2;
-  // const sideEdgeWidth = isSideEdge ? JEWEL_DIAMETER / 2 : 0;
-  // const isVerticalEdge = y === 0 || y === GRID_CELL_DIMENSIONS.ROWS - 2;
-  // const verticalEdgeWidth = isVerticalEdge ? JEWEL_DIAMETER / 2 : 0;
-
   return (
     <button
-      className="select-box"
+      className="relative"
       style={{
         height: JEWEL_DIAMETER,
         width: JEWEL_DIAMETER,
@@ -103,9 +98,6 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
       onMouseLeave={handleMouseLeave}
       onMouseDown={handleMouseDown}
     >
-      {
-        // isHovered && <div className="selection-circle" />
-      }
       {isHovered && (
         <div>
           <div className="selection-circle-container">
@@ -124,6 +116,7 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
     </button>
   );
 }
+
 export function SelectGrid() {
   const rows = [];
   for (let i = 0; i < SELECT_GRID_SIZE.COLUMNS; i = i + 1) {
@@ -131,13 +124,16 @@ export function SelectGrid() {
     for (let j = 0; j < SELECT_GRID_SIZE.ROWS; j = j + 1) {
       column.push(<SelectBox x={j} y={i} key={i + j} />);
     }
-    rows.push(column);
+    rows.push(
+      <div className="flex " key={i}>
+        {column}
+      </div>
+    );
   }
   return (
     <div
-      className="select-grid"
+      className="absolute flex flex-col"
       style={{ top: JEWEL_DIAMETER / 2, left: JEWEL_DIAMETER / 2 }}
-      // style={{ top: 0, left: 0 }}
     >
       {rows}
     </div>

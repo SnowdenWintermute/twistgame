@@ -10,7 +10,6 @@ export default function ThemeSelectionButton() {
         mutateGameState((state) => {
           if (state.theme === Theme.Light) state.theme = Theme.Dark;
           else state.theme = Theme.Light;
-          console.log("setting theme to ", state.theme.toString());
           localStorage.setItem("selectedTheme", state.theme.toString());
         });
       }}

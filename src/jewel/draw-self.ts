@@ -8,7 +8,8 @@ import { useGameStore } from "../stores/game-store";
 import { Point } from "../types";
 import { hexToRgba } from "../utils";
 import {
-  JEWEL_COLOR_URLS,
+  JEWEL_COLOR_FILE_PATHS,
+  JEWEL_ICON_SET_FOLDER_PATHS,
   JEWEL_TYPE_INDICATOR_URLS,
   JEWEL_TYPE_STRINGS,
   JewelColor,
@@ -49,7 +50,10 @@ function getPulsingAnimationScaledValue(jewelType: JewelType) {
 
 function drawJewelImage(context: CanvasRenderingContext2D, jewel: Jewel) {
   const { x, y } = jewel.pixelPosition;
-  const imagePath = JEWEL_COLOR_URLS[jewel.jewelColor];
+  const selectedIconSet = useGameStore.getState().gameOptions.selectedIconSet;
+
+  const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[selectedIconSet];
+  const imagePath = iconFolderPath + JEWEL_COLOR_FILE_PATHS[jewel.jewelColor];
   const image = imageManager.cachedImages[imagePath];
 
   if (image instanceof Image) {

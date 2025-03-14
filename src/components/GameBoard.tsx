@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { GRID_PIXEL_DIMENSIONS } from "../app-consts";
-import { SelectGrid } from "../SelectGrid";
+import { SelectGrid } from "./SelectGrid";
 import { useGameStore } from "../stores/game-store";
 import { TwistGame } from "../game";
 import { gameSingletonHolder } from "../App";

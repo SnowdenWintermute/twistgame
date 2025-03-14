@@ -8,6 +8,7 @@ import { userOSIsSetToDarkMode } from "../utils";
 import { JewelType } from "../jewel/jewel-consts";
 import { GameOptions } from "../game-options";
 import { plainToInstance } from "class-transformer";
+import { HighScoreEntry } from "../high-score-manager";
 
 export enum Theme {
   Dark,
@@ -22,11 +23,13 @@ export class GameState {
   isGameOver: boolean = false;
   currentlyProcessingEventType: null | GameEventType = null;
   showDebug: boolean = false;
+  showAttributions: boolean = false;
   currentLevel: number = 0;
   theme: Theme = userOSIsSetToDarkMode() ? Theme.Dark : Theme.Light;
   jewelTypesToDescribe: JewelType[] = [];
   viewingSettings: boolean = false;
   gameOptions: GameOptions;
+  highScores: HighScoreEntry[] = [];
 
   constructor(
     public mutateState: MutateState<GameState>,

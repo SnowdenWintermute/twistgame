@@ -29,16 +29,39 @@ export const JEWEL_COLOR_NAME_STRINGS: Record<JewelColor, string> = {
   [JewelColor.Rock]: "Rock",
 };
 
-export const JEWEL_COLOR_URLS: Record<JewelColor, string> = {
-  [JewelColor.Red]: "/animals/red.svg",
-  [JewelColor.Blue]: "/animals/blue.svg",
-  [JewelColor.White]: "/animals/white.svg",
-  [JewelColor.Purple]: "/animals/purple.svg",
-  [JewelColor.Green]: "/animals/green.svg",
-  [JewelColor.Yellow]: "/animals/yellow.svg",
-  [JewelColor.Orange]: "/animals/orange.svg",
-  [JewelColor.Rock]: "/animals/rock.svg",
+export const JEWEL_COLOR_FILE_PATHS: Record<JewelColor, string> = {
+  [JewelColor.Red]: "/red.svg",
+  [JewelColor.Blue]: "/blue.svg",
+  [JewelColor.White]: "/white.svg",
+  [JewelColor.Purple]: "/purple.svg",
+  [JewelColor.Green]: "/green.svg",
+  [JewelColor.Yellow]: "/yellow.svg",
+  [JewelColor.Orange]: "/orange.svg",
+  [JewelColor.Rock]: "/rock.svg",
 };
+
+export enum JewelIconSet {
+  Animals,
+  Fruits,
+  Landscapes,
+  Summer,
+  DigitalNomad,
+  Crypto,
+  AbstractFlowers,
+  ColorCircles,
+}
+
+export const JEWEL_ICON_SET_FOLDER_PATHS: Record<JewelIconSet, string> = {
+  [JewelIconSet.Animals]: "/animals",
+  [JewelIconSet.Landscapes]: "/landscapes",
+  [JewelIconSet.Fruits]: "/fruits",
+  [JewelIconSet.Summer]: "/summer",
+  [JewelIconSet.Crypto]: "/crypto",
+  [JewelIconSet.DigitalNomad]: "/digitalnomad",
+  [JewelIconSet.AbstractFlowers]: "/abstractflowers",
+  [JewelIconSet.ColorCircles]: "/colorcircles",
+};
+
 export const JEWEL_TYPE_INDICATOR_URLS: Partial<Record<JewelType, string>> = {
   [JewelType.Fire]: "/jewel-type-indicator/fire.svg",
   [JewelType.Lightning]: "/jewel-type-indicator/lightning.svg",
@@ -61,7 +84,8 @@ export const JEWEL_TYPE_TIPS: Record<JewelType, string> = {
   [JewelType.Fire]: "",
   [JewelType.Lightning]: "",
   [JewelType.Counting]: "When a counting tile reaches zero, the game is over!",
-  [JewelType.Rock]: "Bats can not form matches.",
+  [JewelType.Rock]:
+    "Some tiles cannot form matches. Remove them using lightning or fire tiles.",
   [JewelType.Locked]: "Locked tiles can not be rotated",
   [JewelType.MarkedLocked]: "",
 };

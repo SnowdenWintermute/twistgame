@@ -11,7 +11,9 @@ interface Props {
 export default function FormInput(props: Props) {
   return (
     <>
-      <label htmlFor={props.id}>{props.title}</label>
+      <label htmlFor={props.id} className="text-theme">
+        {props.title}
+      </label>
       <input
         id={props.id}
         type={props.type}
