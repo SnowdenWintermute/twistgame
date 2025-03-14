@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function HotkeyButton(props: Props) {
-  const keydownListenerRef = useRef<(e: KeyboardEvent) => void | null>();
+  const keydownListenerRef = useRef<(e: KeyboardEvent) => void | null>(null);
   const disabled = props.alwaysEnabled === true ? false : props.disabled;
   const listenerType = props.keyUp ? "keyup" : "keydown";
 

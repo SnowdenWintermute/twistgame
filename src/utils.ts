@@ -136,7 +136,7 @@ export function calculateCenter(points: Point[]): Point {
   const centerX = sumX / points.length;
   const centerY = sumY / points.length;
 
-  return { x: centerX, y: centerY };
+  return new Point(centerX, centerY);
 }
 export function lerp(start: number, end: number, ratio: number): number {
   return start + (end - start) * ratio;
