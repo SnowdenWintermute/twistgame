@@ -70,7 +70,8 @@ export class ColumnRefillsGameEvent extends GameEvent {
                 cloneDeep(positionToAssign.cellPosition),
                 currentJewel
               );
-            }
+            },
+            useGameStore.getState().gameOptions.translationSpeed
           )
         );
 

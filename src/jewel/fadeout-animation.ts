@@ -1,14 +1,11 @@
 import { Jewel } from ".";
-import { FADEOUT_ANIMATION_DURATION } from "../app-consts";
 import { Milliseconds } from "../types";
 import { lerp } from "../utils";
 import { JewelAnimation } from "./animation";
 
 export class FadeoutAnimation extends JewelAnimation {
-  duration: Milliseconds = FADEOUT_ANIMATION_DURATION;
-
-  constructor(jewel: Jewel, onComplete: () => void) {
-    super(jewel, onComplete);
+  constructor(jewel: Jewel, onComplete: () => void, duration: Milliseconds) {
+    super(jewel, onComplete, duration);
   }
   update() {
     const elapsed = Date.now() - this.timeStarted;

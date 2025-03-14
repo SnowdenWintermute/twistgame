@@ -6,6 +6,12 @@
   .text-theme {
     @apply text-light-text dark:text-dark-text;
   }
+  .bg-theme-accent {
+    @apply bg-light-accent dark:bg-dark-accent;
+  }
+  .text-theme-primary {
+    @apply text-light-primary dark:text-dark-primary;
+  }
   .bg-theme {
     @apply bg-light-background dark:bg-dark-background;
   }

@@ -45,7 +45,13 @@ export class JewelRemovalsGameEvent extends GameEvent {
           jewel.shouldBeReplaced = true;
           this.numJewelsMarkedForRemoval += 1;
 
-          jewel.animations.push(new FadeoutAnimation(jewel, () => {}));
+          jewel.animations.push(
+            new FadeoutAnimation(
+              jewel,
+              () => {},
+              useGameStore.getState().gameOptions.fadeoutAnimationDuration
+            )
+          );
         });
       } else if (match.longestAxisLength < 5) {
         this.handleSpecialJewelCreation(
@@ -98,7 +104,8 @@ export class JewelRemovalsGameEvent extends GameEvent {
           currentJewel,
           () => {
             currentJewel.opacity = 0;
-          }
+          },
+          useGameStore.getState().gameOptions.translationSpeed
         )
       );
     });

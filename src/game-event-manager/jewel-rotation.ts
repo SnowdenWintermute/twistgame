@@ -4,6 +4,7 @@ import { getJewelPixelPosition } from "../grid";
 import { Jewel } from "../jewel";
 import { JewelQuartet } from "../jewel-quartet";
 import { OrbitAnimation } from "../jewel/orbit-animation";
+import { useGameStore } from "../stores/game-store";
 import { Point } from "../types";
 import { calculateAngle, calculateCenter } from "../utils";
 import { JewelRemovalsGameEvent } from "./jewel-removals";
@@ -104,6 +105,7 @@ export class QuartetRotationGameEvent extends GameEvent {
         rotationCenter,
         originalAngle,
         destinationAngle,
+        useGameStore.getState().gameOptions.rotationAnimationDuration,
         jewelToRotate,
         () => {}
       )

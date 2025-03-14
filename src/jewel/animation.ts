@@ -3,11 +3,11 @@ import { Milliseconds } from "../types";
 
 export abstract class JewelAnimation {
   timeStarted: Milliseconds = Date.now();
-  protected abstract duration: Milliseconds;
 
   constructor(
     protected jewel: Jewel,
-    public onComplete: () => void
+    public onComplete: () => void,
+    protected duration: Milliseconds
   ) {}
   abstract update(): void;
   isComplete() {

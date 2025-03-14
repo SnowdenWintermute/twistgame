@@ -18,6 +18,17 @@ export enum JewelColor {
   Rock,
 }
 
+export const JEWEL_COLOR_NAME_STRINGS: Record<JewelColor, string> = {
+  [JewelColor.Red]: "Red",
+  [JewelColor.Blue]: "Blue",
+  [JewelColor.White]: "White",
+  [JewelColor.Purple]: "Purple",
+  [JewelColor.Green]: "Green",
+  [JewelColor.Yellow]: "Yellow",
+  [JewelColor.Orange]: "Orange",
+  [JewelColor.Rock]: "Rock",
+};
+
 export const JEWEL_COLOR_URLS: Record<JewelColor, string> = {
   [JewelColor.Red]: "/animals/red.svg",
   [JewelColor.Blue]: "/animals/blue.svg",
@@ -40,7 +51,7 @@ export const JEWEL_TYPE_STRINGS: Record<JewelType, string> = {
   [JewelType.Fire]: "Fire",
   [JewelType.Lightning]: "Lightning",
   [JewelType.Counting]: "Counting",
-  [JewelType.Rock]: "Rock",
+  [JewelType.Rock]: "Unmatchable",
   [JewelType.Locked]: "Locked",
   [JewelType.MarkedLocked]: "MarkedLocked",
 };

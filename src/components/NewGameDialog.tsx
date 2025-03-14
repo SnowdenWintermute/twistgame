@@ -1,5 +1,6 @@
 import { gameSingletonHolder } from "../App";
 import { useGameStore } from "../stores/game-store";
+import HotkeyButton from "./HotkeyButton";
 
 export default function NewGameDialog() {
   const isGameOver = useGameStore().isGameOver;
@@ -19,14 +20,15 @@ export default function NewGameDialog() {
       }
     >
       <div className="absolute top-0 left-0 h-full w-full bg-black opacity-50" />
-      <div className="absolute bg-light-background dark:bg-dark-background p-4 border-[4px] border-light-text dark:border-dark-text flex justify-center flex-col">
-        <h3 className="text-2xl mb-2">GAME OVER !!!</h3>
-        <button
-          className="border-[2px] text-light-text dark:text-dark-text p-2 bg-teal-800 hover:bg-teal-700"
+      <div className="absolute bg-theme p-4 border-[4px] border-theme flex justify-center flex-col">
+        <h3 className="text-2xl mb-2 text-theme-primary">GAME OVER !!!</h3>
+        <HotkeyButton
+          className="border-[2px] border-theme text-theme-primary p-2 bg-theme-accent hover:opacity-90"
+          hotkeys={["Enter"]}
           onClick={handleNewGameClick}
         >
           Play Again
-        </button>
+        </HotkeyButton>
       </div>
     </dialog>
   );

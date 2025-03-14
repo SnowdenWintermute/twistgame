@@ -1,4 +1,3 @@
-import { SetStateAction } from "react";
 import {
   COUNTING_JEWEL_BASE_START_COUNT,
   GRID_CELL_DIMENSIONS,
@@ -195,12 +194,13 @@ export function createJewel(level: number, pixelPosition: Point) {
   let min = 0;
   let selectedJewelType = JewelType.Normal;
   let selectedCount = 0;
-  const allColors = iterateNumericEnum(JewelColor).filter(
-    (jewelColor) => jewelColor !== JewelColor.Rock
-  );
+  const allColors = useGameStore.getState().gameOptions.allowedColors;
   let selectedColor: JewelColor = chooseRandomFromArray(allColors);
+
   for (const [jewelType, chance] of iterateNumericEnumKeyedRecord(
     JEWEL_TYPE_CHANCES_BY_LEVEL
+  ).filter(([jewelType, chance]) =>
+    useGameStore.getState().gameOptions.allowedTypes.includes(jewelType)
   )) {
     const chanceOnThisLevel = chance * level;
     if (random > min && random <= min + chanceOnThisLevel) {

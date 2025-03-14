@@ -1,22 +1,20 @@
 import { Jewel } from ".";
-import { TIME_TO_TRANSLATE_ONE_PIXEL } from "../app-consts";
 import { Point } from "../types";
 import { Milliseconds } from "../types";
 import { easeIn, lerp } from "../utils";
 import { JewelAnimation } from "./animation";
 
 export class TranslationAnimation extends JewelAnimation {
-  duration: Milliseconds;
-
   constructor(
     private originalPosition: Point,
     private destinationPosition: Point,
     jewel: Jewel,
-    onComplete: () => void
+    onComplete: () => void,
+    timeToTranslateOnePixel: Milliseconds
   ) {
-    super(jewel, onComplete);
     const distance = originalPosition.distance(destinationPosition);
-    this.duration = TIME_TO_TRANSLATE_ONE_PIXEL * distance;
+    const duration = timeToTranslateOnePixel * distance;
+    super(jewel, onComplete, duration);
   }
   update() {
     const elapsed = Date.now() - this.timeStarted;

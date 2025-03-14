@@ -6,6 +6,8 @@ import { MutateState } from "./mutate-state";
 import { GameEventType } from "../game-event-manager";
 import { userOSIsSetToDarkMode } from "../utils";
 import { JewelType } from "../jewel/jewel-consts";
+import { GameOptions } from "../game-options";
+import { plainToInstance } from "class-transformer";
 
 export enum Theme {
   Dark,
@@ -23,12 +25,22 @@ export class GameState {
   currentLevel: number = 0;
   theme: Theme = userOSIsSetToDarkMode() ? Theme.Dark : Theme.Light;
   jewelTypesToDescribe: JewelType[] = [];
-  viewingSettings: boolean = true;
+  viewingSettings: boolean = false;
+  gameOptions: GameOptions;
 
   constructor(
     public mutateState: MutateState<GameState>,
     public get: () => GameState
-  ) {}
+  ) {
+    const savedGameOptions = localStorage.getItem("settings");
+    if (savedGameOptions) {
+      const parsed = JSON.parse(savedGameOptions);
+      const asClass = plainToInstance(GameOptions, parsed);
+      this.gameOptions = asClass;
+    } else {
+      this.gameOptions = new GameOptions();
+    }
+  }
 }
 
 export const useGameStore = create<GameState>()(

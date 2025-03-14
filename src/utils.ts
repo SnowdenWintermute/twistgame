@@ -159,3 +159,11 @@ export function userOSIsSetToDarkMode() {
   const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   return isDarkMode;
 }
+
+export function enumAsBooleanRecord<T extends number>(items: T[]) {
+  const toSet: Partial<Record<T, boolean>> = {};
+  items.forEach((item) => {
+    toSet[item] = true;
+  });
+  return toSet;
+}

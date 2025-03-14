@@ -110,8 +110,7 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
         <div>
           <div className="selection-circle-container">
             <SelectCircle
-              className="selection-circle-svg"
-              style={{ fill: flashingDisabled ? "red" : "grey" }}
+              className={`selection-circle-svg ${flashingDisabled ? "fill-red-500" : "fill-grey-200 dark:fill-white"}`}
             />
           </div>
           <div className="selection-circle-container">

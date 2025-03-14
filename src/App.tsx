@@ -13,7 +13,6 @@ import DebugDisplay from "./components/DebugDisplay";
 import HorizontalDivider from "./Divider";
 import ScoreDisplay from "./components/ScoreDisplay";
 import ThemeSelectionButton from "./components/ThemeSelectionButton";
-import Settings from "./components/Settings";
 
 // for immer to be able to use map and set
 enableMapSet();
