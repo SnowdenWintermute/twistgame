@@ -23,6 +23,7 @@ export class GameState {
   currentLevel: number = 0;
   theme: Theme = userOSIsSetToDarkMode() ? Theme.Dark : Theme.Light;
   jewelTypesToDescribe: JewelType[] = [];
+  viewingSettings: boolean = true;
 
   constructor(
     public mutateState: MutateState<GameState>,

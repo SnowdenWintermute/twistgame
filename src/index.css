@@ -6,12 +6,16 @@
   .text-theme {
     @apply text-light-text dark:text-dark-text;
   }
-
   .bg-theme {
     @apply bg-light-background dark:bg-dark-background;
   }
-
   .border-theme {
     @apply border-light-border dark:border-dark-border;
+  }
+  .fill-theme {
+    @apply fill-light-fill dark:fill-dark-fill;
+  }
+  .stroke-theme {
+    @apply stroke-light-stroke dark:stroke-dark-stroke;
   }
 }
