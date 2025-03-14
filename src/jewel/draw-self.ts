@@ -144,18 +144,18 @@ function drawZapEffect(context: CanvasRenderingContext2D, center: Point) {
   drawCircleAtPoint(context, center, "dodgerblue");
 }
 
-function drawJewelColorCircle(
-  context: CanvasRenderingContext2D,
-  center: Point,
-  color: JewelColor
-) {
-  const { x, y } = center;
-  context.beginPath();
-  context.arc(x, y, JEWEL_DIAMETER / 2, 0, 2 * Math.PI);
-  const colorRgba = hexToRgba(JEWEL_COLOR_URLS[color], 1);
-  context.fillStyle = colorRgba;
-  context.fill();
-}
+// function drawJewelColorCircle(
+//   context: CanvasRenderingContext2D,
+//   center: Point,
+//   color: JewelColor
+// ) {
+//   const { x, y } = center;
+//   context.beginPath();
+//   context.arc(x, y, JEWEL_DIAMETER / 2, 0, 2 * Math.PI);
+//   const colorRgba = hexToRgba(JEWEL_COLOR_URLS[color], 1);
+//   context.fillStyle = colorRgba;
+//   context.fill();
+// }
 
 function drawSelectionCircle(context: CanvasRenderingContext2D, jewel: Jewel) {
   if (jewel.isSelected === false) return;

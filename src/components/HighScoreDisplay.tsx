@@ -42,7 +42,7 @@ export default function HighScoreDisplay() {
       <div className="w-1/2 max-w-1/2">
         <h3 className="text-xl text-theme">High Scores</h3>
         <HorizontalDivider extraStyles="h-[2px] bg-theme mb-2" />
-        {highScores.length && (
+        {highScores.length ? (
           <table className="table-auto w-full border-collapse mb-4 ">
             <thead className="block min-h-0" style={{ flex: "1 1 1px;" }}>
               <tr className="border-b border-slate-400 font-bold">
@@ -69,6 +69,8 @@ export default function HighScoreDisplay() {
               ))}
             </tbody>
           </table>
+        ) : (
+          ""
         )}
         {!highScores.length && <div>None yet...</div>}
       </div>
