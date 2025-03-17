@@ -10,6 +10,8 @@ export class ImageManager {
     const loadedImages: Record<string, HTMLImageElement> = {};
 
     for (const url of urls) {
+      if (this.cachedImages[url]) continue;
+
       const response = await fetch(url);
       const svgText = await response.text();
       const svgBlob = new Blob([svgText], {
