@@ -65,30 +65,30 @@ function App() {
       <div
         className={`h-screen max-h-screen text-theme bg-theme overflow-auto`}
       >
-        <div className="p-4 flex flex-col items-center justify-center relative w-full">
-          <HorizontalDivider extraStyles="h-[4px]" />
-          <div>
-            <HotkeyButton
-              onClick={() => {
-                mutateGameState((state) => {
-                  state.showAttributions = !state.showAttributions;
-                });
-              }}
-              className="absolute left-4 top-1/2 -translate-y-1/2"
-            >
-              {showDebug ? "hide" : "show"} attributions
-            </HotkeyButton>
-            <h1 className="text-theme text-3xl font-bold pt-2 pb-2">
-              twistgame (title TBD)
-            </h1>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-theme flex">
-              <ThemeSelectionButton />
-            </div>
-          </div>
-          <HorizontalDivider extraStyles={"h-[4px]"} />
-        </div>
         <div className="flex justify-center">
           <div className="flex justify-center flex-col w-full max-w-[830px] p-4 pt-0">
+            <div className="py-4 flex flex-col items-center justify-center relative w-full">
+              <HorizontalDivider extraStyles="h-[4px]" />
+              <div>
+                <HotkeyButton
+                  onClick={() => {
+                    mutateGameState((state) => {
+                      state.showAttributions = !state.showAttributions;
+                    });
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2"
+                >
+                  {showDebug ? "hide" : "show"} attributions
+                </HotkeyButton>
+                <h1 className="text-theme text-3xl font-bold pt-2 pb-2">
+                  Four Body Problem
+                </h1>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-theme flex">
+                  <ThemeSelectionButton />
+                </div>
+              </div>
+              <HorizontalDivider extraStyles={"h-[4px]"} />
+            </div>
             <div className="flex justify-center mb-2">
               <ScoreDisplay />
               <GameBoard />

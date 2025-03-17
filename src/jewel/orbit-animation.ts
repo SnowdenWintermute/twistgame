@@ -1,12 +1,16 @@
 import { Jewel } from ".";
-import { JEWEL_DIAMETER } from "../app-consts";
+import { useGameStore } from "../stores/game-store";
 import { Point } from "../types";
 import { Milliseconds, Radians } from "../types";
 import { easeInOut, getOrbitPosition, lerpAngle, pythagorean } from "../utils";
 import { JewelAnimation } from "./animation";
 
 export class OrbitAnimation extends JewelAnimation {
-  radius: number = pythagorean(JEWEL_DIAMETER, JEWEL_DIAMETER) / 2;
+  radius: number =
+    pythagorean(
+      useGameStore.getState().jewelDiameter,
+      useGameStore.getState().jewelDiameter
+    ) / 2;
   constructor(
     private center: Point,
     private originalAngle: Radians,

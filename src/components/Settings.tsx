@@ -174,7 +174,7 @@ export default function Settings() {
           }}
         />
         <HorizontalDivider extraStyles="h-[1px] mt-2 mb-2" />
-        <h4 className="text-theme mb-1">Allowed Colors</h4>
+        <h4 className="text-theme mb-1">Allowed Refill Colors</h4>
         <div className="flex justify-between mb-1">
           <ul className="">
             {colorOptions.slice(0, colorOptions.length / 2 + 1).map((color) => (

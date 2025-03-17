@@ -1,22 +1,23 @@
 import { Jewel } from ".";
 import { imageManager } from "../App";
-import {
-  JEWEL_DIAMETER,
-  SPECIAL_JEWEL_PULSING_ANIMATION_DURATION,
-} from "../app-consts";
+import { SPECIAL_JEWEL_PULSING_ANIMATION_DURATION } from "../app-consts";
 import { useGameStore } from "../stores/game-store";
 import { Point } from "../types";
-import { hexToRgba } from "../utils";
 import {
   JEWEL_COLOR_FILE_PATHS,
   JEWEL_ICON_SET_FOLDER_PATHS,
   JEWEL_TYPE_INDICATOR_URLS,
   JEWEL_TYPE_STRINGS,
-  JewelColor,
   JewelType,
 } from "./jewel-consts";
 
 export function drawSelf(this: Jewel, context: CanvasRenderingContext2D) {
+  // if (
+  //   this.animations.length === 0 &&
+  //   this.jewelType !== JewelType.Counting &&
+  //   this.jewelType !== JewelType.MarkedLocked
+  // )
+  //   return;
   const animatedSymbolScaling = getPulsingAnimationScaledValue(this.jewelType);
   drawJewelImage(context, this);
   drawSpecialJewelSymbol(context, this, animatedSymbolScaling);
@@ -58,8 +59,8 @@ function drawJewelImage(context: CanvasRenderingContext2D, jewel: Jewel) {
 
   if (image instanceof Image) {
     const aspectRatio = image.width / image.height;
-    const desiredHeight = JEWEL_DIAMETER;
-    const desiredWidth = JEWEL_DIAMETER * aspectRatio;
+    const desiredHeight = useGameStore.getState().jewelDiameter;
+    const desiredWidth = useGameStore.getState().jewelDiameter * aspectRatio;
     context.globalAlpha = jewel.opacity;
     context.drawImage(
       image,
@@ -95,10 +96,11 @@ function drawSpecialJewelSymbol(
     throw new Error("special jewel indicator image not found");
   const aspectRatio = image.width / image.height;
 
-  const desiredHeight = (JEWEL_DIAMETER / 2) * animatedSymbolScaling;
+  const desiredHeight =
+    (useGameStore.getState().jewelDiameter / 2) * animatedSymbolScaling;
   const desiredWidth = desiredHeight * aspectRatio;
   context.beginPath();
-  context.arc(x, y, JEWEL_DIAMETER / 4, 0, Math.PI * 2);
+  context.arc(x, y, useGameStore.getState().jewelDiameter / 4, 0, Math.PI * 2);
   context.fillStyle = "black";
   context.fill();
   context.drawImage(
@@ -119,7 +121,7 @@ function drawJewelCount(
 
   const { x, y } = jewel.pixelPosition;
   context.beginPath();
-  context.arc(x, y, JEWEL_DIAMETER / 4, 0, Math.PI * 2);
+  context.arc(x, y, useGameStore.getState().jewelDiameter / 4, 0, Math.PI * 2);
   context.fillStyle = `rgba(0,0,0,${jewel.opacity})`;
   context.fill();
   context.fillStyle = `rgba(255,255,255,${jewel.opacity})`;
@@ -167,12 +169,18 @@ function drawJewelIdTag(context: CanvasRenderingContext2D, jewel: Jewel) {
   context.beginPath();
 
   const idTagPosition = new Point(
-    x + JEWEL_DIAMETER / 4,
-    y + JEWEL_DIAMETER / 4
+    x + useGameStore.getState().jewelDiameter / 4,
+    y + useGameStore.getState().jewelDiameter / 4
   );
 
   const { x: idX, y: idY } = idTagPosition;
-  context.arc(idX, idY, JEWEL_DIAMETER / 8, 0, Math.PI * 2);
+  context.arc(
+    idX,
+    idY,
+    useGameStore.getState().jewelDiameter / 8,
+    0,
+    Math.PI * 2
+  );
   context.fillStyle = `rgba(0,0,0,1)`;
   context.fill();
   context.fillStyle = `rgba(255,255,255,1)`;
@@ -214,7 +222,7 @@ function drawCircleAtPoint(
 ) {
   const { x, y } = center;
   context.beginPath();
-  context.arc(x, y, JEWEL_DIAMETER / 2, 0, 2 * Math.PI);
+  context.arc(x, y, useGameStore.getState().jewelDiameter / 2, 0, 2 * Math.PI);
   context.strokeStyle = color;
   context.lineWidth = 5;
   context.stroke();

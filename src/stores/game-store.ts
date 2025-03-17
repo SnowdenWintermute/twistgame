@@ -9,6 +9,7 @@ import { JewelType } from "../jewel/jewel-consts";
 import { GameOptions } from "../game-options";
 import { plainToInstance } from "class-transformer";
 import { HighScoreEntry } from "../high-score-manager";
+import { Dimensions } from "../grid";
 
 export enum Theme {
   Dark,
@@ -30,6 +31,8 @@ export class GameState {
   viewingSettings: boolean = false;
   gameOptions: GameOptions;
   highScores: HighScoreEntry[] = [];
+  canvasSize: Dimensions = { width: 0, height: 0 };
+  jewelDiameter: number = 0;
 
   constructor(
     public mutateState: MutateState<GameState>,

@@ -3,7 +3,6 @@ import { gameSingletonHolder } from "../App";
 import "../App.css";
 import {
   DISABLED_FLASH_TIMEOUT_DURATION,
-  JEWEL_DIAMETER,
   SELECT_GRID_SIZE,
 } from "../app-consts";
 import { QuartetRotationGameEvent } from "../game-event-manager/jewel-rotation";
@@ -22,6 +21,7 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
   const [flashingDisabled, setFlashingDisabled] = useState(false);
   const flashingDisabledTimeoutRef = useRef<number>(null);
   const mutateGameState = useGameStore().mutateState;
+  const jewelDiameter = useGameStore().jewelDiameter;
 
   const quartet = new JewelQuartet(
     new Point(selectBoxProps.x, selectBoxProps.y)
@@ -48,7 +48,6 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
 
   function handleMouseEnter() {
     if (!gameSingletonHolder.game) return;
-    console.log("mouse netered");
     const { grid } = gameSingletonHolder.game;
     quartet.selectJewels(grid);
     setIsHovered(true);
@@ -91,8 +90,8 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
     <button
       className="relative"
       style={{
-        height: JEWEL_DIAMETER,
-        width: JEWEL_DIAMETER,
+        height: jewelDiameter,
+        width: jewelDiameter,
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -118,6 +117,8 @@ export function SelectBox(selectBoxProps: SelectBoxProps) {
 }
 
 export function SelectGrid() {
+  const jewelDiameter = useGameStore().jewelDiameter;
+
   const rows = [];
   for (let i = 0; i < SELECT_GRID_SIZE.COLUMNS; i = i + 1) {
     const column = [];
@@ -133,7 +134,7 @@ export function SelectGrid() {
   return (
     <div
       className="absolute flex flex-col"
-      style={{ top: JEWEL_DIAMETER / 2, left: JEWEL_DIAMETER / 2 }}
+      style={{ top: jewelDiameter / 2, left: jewelDiameter / 2 }}
     >
       {rows}
     </div>

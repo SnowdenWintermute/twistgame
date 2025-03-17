@@ -12,7 +12,7 @@ export default function ScoreDisplay() {
   const mutateGameState = useGameStore().mutateState;
 
   return (
-    <div className="w-72 border-[3px] border-theme mr-2 p-2 pt-4 relative flex flex-col justify-between">
+    <div className="w-72 max-md:hidden border-[3px] border-theme mr-2 p-2 pt-4 relative flex flex-col justify-between">
       <Settings />
       <button
         className="absolute top-2 right-2 h-6"

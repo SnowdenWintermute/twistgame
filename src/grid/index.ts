@@ -7,17 +7,17 @@ import {
 import { Jewel } from "../jewel";
 import { Point } from "../types";
 import { JewelColor, JewelType } from "../jewel/jewel-consts";
-import {
-  iterateNumericEnum,
-  chooseRandomFromArray,
-  iterateNumericEnumKeyedRecord,
-} from "../utils";
+import { chooseRandomFromArray, iterateNumericEnumKeyedRecord } from "../utils";
 import { Match } from "../match-checker";
 import { useGameStore } from "../stores/game-store";
+import { immerable } from "immer";
 
-export interface Dimensions {
-  width: number;
-  height: number;
+export class Dimensions {
+  [immerable] = true;
+  constructor(
+    public width: number,
+    public height: number
+  ) {}
 }
 
 export class Grid {
@@ -25,20 +25,21 @@ export class Grid {
   pixelDimensions: Dimensions;
   cellDimensions: Dimensions;
   numJewelsRemoved: number = 0;
+  jewelDiameter: number = 0;
 
   constructor() {
-    this.cellDimensions = {
-      width: GRID_CELL_DIMENSIONS.COLUMNS,
-      height: GRID_CELL_DIMENSIONS.ROWS,
-    };
+    this.cellDimensions = new Dimensions(
+      GRID_CELL_DIMENSIONS.COLUMNS,
+      GRID_CELL_DIMENSIONS.ROWS
+    );
     this.rows = this.makeGrid(
       this.cellDimensions.height,
       this.cellDimensions.width
     );
-    this.pixelDimensions = {
-      width: GRID_PIXEL_DIMENSIONS.WIDTH,
-      height: GRID_PIXEL_DIMENSIONS.HEIGHT,
-    };
+    this.pixelDimensions = new Dimensions(
+      GRID_PIXEL_DIMENSIONS.WIDTH,
+      GRID_PIXEL_DIMENSIONS.HEIGHT
+    );
   }
   updateScore(update: number) {
     this.numJewelsRemoved += update;
@@ -227,10 +228,12 @@ export function createJewel(level: number, pixelPosition: Point) {
     pixelPosition
   );
 }
+
 export function getJewelPixelPosition(row: number, column: number) {
-  const rowHeight = GRID_PIXEL_DIMENSIONS.HEIGHT / GRID_CELL_DIMENSIONS.ROWS;
+  const rowHeight =
+    useGameStore.getState().canvasSize.height / GRID_CELL_DIMENSIONS.ROWS;
   const columnWidth =
-    GRID_PIXEL_DIMENSIONS.WIDTH / GRID_CELL_DIMENSIONS.COLUMNS;
+    useGameStore.getState().canvasSize.width / GRID_CELL_DIMENSIONS.COLUMNS;
   const x = columnWidth * column + columnWidth / 2;
   const y = rowHeight * row + rowHeight / 2;
   return new Point(x, y);
