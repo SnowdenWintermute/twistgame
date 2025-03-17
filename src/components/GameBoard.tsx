@@ -6,6 +6,7 @@ import { gameSingletonHolder } from "../App";
 import NewGameDialog from "./NewGameDialog";
 import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
@@ -68,17 +69,29 @@ export default function GameBoard() {
     };
   }, [loading]);
 
-  if (loading) return "loading";
   return (
     <div className="all-grids">
-      <NewGameDialog />
-      <canvas
-        height={canvasSize.height}
-        width={canvasSize.width}
-        style={{ height: canvasSize.height, width: canvasSize.width }}
-        className="border-[2px] border-light-text bg-slate-200 dark:border-dark-text dark:bg-dark-background"
-      ></canvas>
-      <SelectGrid />
+      {loading ? (
+        <div
+          className="flex items-center justify-center"
+          style={{ height: canvasSize.height, width: canvasSize.width }}
+        >
+          <div className="h-10 w-10">
+            <LoadingSpinner />
+          </div>
+        </div>
+      ) : (
+        <>
+          <NewGameDialog />
+          <canvas
+            height={canvasSize.height}
+            width={canvasSize.width}
+            style={{ height: canvasSize.height, width: canvasSize.width }}
+            className="border-[2px] border-light-text bg-slate-200 dark:border-dark-text dark:bg-dark-background"
+          ></canvas>
+          <SelectGrid />
+        </>
+      )}
     </div>
   );
 }

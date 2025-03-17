@@ -27,6 +27,19 @@ const config: Config = {
         },
       },
     },
+    keyframes: {
+      "spin-full-keyframes": {
+        "0%": {
+          transform: "rotate(0deg)",
+        },
+        "100%": {
+          transform: "rotate(360deg)",
+        },
+      },
+    },
+    animation: {
+      "spin-full": "spin-full-keyframes 3s linear forwards infinite",
+    },
   },
 };
 export default config;

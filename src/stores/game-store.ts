@@ -31,7 +31,7 @@ export class GameState {
   viewingSettings: boolean = false;
   gameOptions: GameOptions;
   highScores: HighScoreEntry[] = [];
-  canvasSize: Dimensions = { width: 0, height: 0 };
+  canvasSize: Dimensions = new Dimensions(0, 0);
   jewelDiameter: number = 0;
 
   constructor(

@@ -32,6 +32,7 @@ export class Grid {
       GRID_CELL_DIMENSIONS.COLUMNS,
       GRID_CELL_DIMENSIONS.ROWS
     );
+
     this.rows = this.makeGrid(
       this.cellDimensions.height,
       this.cellDimensions.width
