@@ -37,7 +37,6 @@ function App() {
     const localThemeSelection = localStorage.getItem("selectedTheme");
     if (localThemeSelection !== null)
       mutateGameState((state) => {
-        console.log("setting theme to:", state.theme);
         state.theme = parseInt(localThemeSelection);
       });
   }, []);
@@ -55,11 +54,21 @@ function App() {
     const indicatorURLs = Object.values(JEWEL_TYPE_INDICATOR_URLS);
     const allURLs = jewelImageURLs.concat(indicatorURLs);
 
-    imageManager.loadImages(allURLs, () => {
+    function handleProgress(normalizedPercent: number) {
       mutateGameState((state) => {
-        state.loading = false;
+        state.imageLoadingNormalizedPercent = normalizedPercent;
       });
-    });
+    }
+
+    imageManager.loadImages(
+      allURLs,
+      () => {
+        mutateGameState((state) => {
+          state.loading = false;
+        });
+      },
+      handleProgress
+    );
   }, []);
 
   return (

@@ -1,17 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { SelectGrid } from "./SelectGrid";
 import { useGameStore } from "../stores/game-store";
 import { TwistGame } from "../game";
 import { gameSingletonHolder } from "../App";
 import NewGameDialog from "./NewGameDialog";
-import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
+import {
+  GRID_CELL_DIMENSIONS,
+  GRID_PIXEL_DIMENSIONS,
+  LOADING_MESSAGES,
+} from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
-import LoadingSpinner from "./LoadingSpinner";
+import CircularProgress from "./CircularProgress";
+import { chooseRandomFromArray } from "../utils";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
   const canvasSize = useGameStore().canvasSize;
+  const imageLoadingNormalizedPercent =
+    useGameStore().imageLoadingNormalizedPercent;
   const mutateState = useGameStore().mutateState;
+  const loadingMessage = useRef<string>(
+    chooseRandomFromArray(LOADING_MESSAGES)
+  );
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -76,11 +86,15 @@ export default function GameBoard() {
     <div className="all-grids">
       {loading ? (
         <div
-          className="flex items-center justify-center"
+          className="flex items-center justify-center flex-col"
           style={{ height: canvasSize.height, width: canvasSize.width }}
         >
+          <div className="mb-2">{loadingMessage.current}...</div>
           <div className="h-10 w-10">
-            <LoadingSpinner />
+            <CircularProgress
+              thickness={4}
+              percentage={imageLoadingNormalizedPercent * 100}
+            />
           </div>
         </div>
       ) : (

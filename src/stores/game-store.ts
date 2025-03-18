@@ -33,6 +33,7 @@ export class GameState {
   highScores: HighScoreEntry[] = [];
   canvasSize: Dimensions = new Dimensions(0, 0);
   jewelDiameter: number = 0;
+  imageLoadingNormalizedPercent: number = 0;
 
   constructor(
     public mutateState: MutateState<GameState>,

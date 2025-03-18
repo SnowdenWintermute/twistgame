@@ -27,3 +27,9 @@ export const JEWEL_TYPE_CHANCES_BY_LEVEL: Record<JewelType, number> = {
   // [JewelType.MarkedLocked]: 0.0,
   [JewelType.MarkedLocked]: 0.005,
 };
+
+export const LOADING_MESSAGES = [
+  "Increasing bat population",
+  "Coalescing special tiles",
+  "Greasing quartet bearings",
+];
