@@ -47,8 +47,8 @@ export class ImageManager {
           this.imageProgressMap[url].loaded = loadedBytes;
 
           // Update total progress
-          const totalProgress = this.computeTotalProgress();
-          onProgress?.(totalProgress);
+          // const totalProgress = this.computeTotalProgress();
+          // onProgress?.(totalProgress);
         }
       }
 
@@ -64,7 +64,9 @@ export class ImageManager {
           loadedImages[url] = img;
           this.cachedImages[url] = img;
           URL.revokeObjectURL(blobUrl);
-          resolve();
+          setTimeout(() => {
+            resolve();
+          }, 1000);
         };
       });
 

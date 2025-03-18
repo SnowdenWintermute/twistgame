@@ -19,6 +19,7 @@ import HotkeyButton from "./components/HotkeyButton";
 import HighScoreDisplay from "./components/HighScoreDisplay";
 import { iterateNumericEnum } from "./utils";
 import AttributionList from "./components/AttributionList";
+import AttributionIcon from "./assets/quotes.svg?react";
 
 // for immer to be able to use map and set
 enableMapSet();
@@ -89,7 +90,9 @@ function App() {
                   }}
                   className="absolute left-4 top-1/2 -translate-y-1/2"
                 >
-                  {showDebug ? "hide" : "show"} attributions
+                  <div className="h-8">
+                    <AttributionIcon className="fill-theme h-full" />
+                  </div>
                 </HotkeyButton>
                 <h1 className="text-theme text-3xl font-bold pt-2 pb-2">
                   Four Body Problem

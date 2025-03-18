@@ -1,17 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SelectGrid } from "./SelectGrid";
 import { useGameStore } from "../stores/game-store";
 import { TwistGame } from "../game";
 import { gameSingletonHolder } from "../App";
 import NewGameDialog from "./NewGameDialog";
-import {
-  GRID_CELL_DIMENSIONS,
-  GRID_PIXEL_DIMENSIONS,
-  LOADING_MESSAGES,
-} from "../app-consts";
+import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
+import LoadingSpinner from "./LoadingSpinner";
 import CircularProgress from "./CircularProgress";
-import { chooseRandomFromArray } from "../utils";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
@@ -19,9 +15,26 @@ export default function GameBoard() {
   const imageLoadingNormalizedPercent =
     useGameStore().imageLoadingNormalizedPercent;
   const mutateState = useGameStore().mutateState;
-  const loadingMessage = useRef<string>(
-    chooseRandomFromArray(LOADING_MESSAGES)
-  );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [percentLoadTest, setPercentLoadTest] = useState(0);
+  const timeoutRef = useRef<number>(null);
+
+  useEffect(() => {
+    // function increaseTestPercent() {
+    //   if (percentLoadTest >= 1) return;
+    //   setPercentLoadTest(percentLoadTest + 0.001);
+    // }
+    timeoutRef.current = setTimeout(() => {
+      setPercentLoadTest(percentLoadTest + 0.1);
+    }, 200);
+
+    // increaseTestPercent();
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [percentLoadTest]);
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -67,10 +80,8 @@ export default function GameBoard() {
     // context.translate(0, 100);
 
     let game = gameSingletonHolder.game;
-    console.log("game exist:", game);
 
     if (!game) {
-      console.log("no game");
       game = new TwistGame(context);
       gameSingletonHolder.game = game;
     }
@@ -85,15 +96,16 @@ export default function GameBoard() {
   return (
     <div className="all-grids">
       {loading ? (
+        // loading
         <div
-          className="flex items-center justify-center flex-col"
+          className="flex items-center justify-center"
           style={{ height: canvasSize.height, width: canvasSize.width }}
         >
-          <div className="mb-2">{loadingMessage.current}...</div>
           <div className="h-10 w-10">
             <CircularProgress
               thickness={4}
-              percentage={imageLoadingNormalizedPercent * 100}
+              percentage={Math.floor(imageLoadingNormalizedPercent * 100)}
+              // percentage={percentLoadTest * 100}
             />
           </div>
         </div>
