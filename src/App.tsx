@@ -45,23 +45,22 @@ function App() {
   useEffect(() => {
     const jewelImageURLs: string[] = [];
 
-    Object.values(JEWEL_COLOR_FILE_PATHS).forEach((filePath) => {
-      const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[selectedIconSet];
-      jewelImageURLs.push(iconFolderPath + filePath);
-    });
+    for (const iconSet of iterateNumericEnum(JewelIconSet)) {
+      Object.values(JEWEL_COLOR_FILE_PATHS).forEach((filePath) => {
+        const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[iconSet];
+        jewelImageURLs.push(iconFolderPath + filePath);
+      });
+    }
 
     const indicatorURLs = Object.values(JEWEL_TYPE_INDICATOR_URLS);
     const allURLs = jewelImageURLs.concat(indicatorURLs);
 
-    mutateGameState((state) => {
-      state.loading = true;
-    });
     imageManager.loadImages(allURLs, () => {
       mutateGameState((state) => {
         state.loading = false;
       });
     });
-  }, [selectedIconSet]);
+  }, []);
 
   return (
     <div className={theme === Theme.Dark ? "dark" : "light"}>

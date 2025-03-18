@@ -41,8 +41,6 @@ export default function GameBoard() {
           });
         });
       }
-
-      console.log("set new dimensions: ", newDimensions);
     }
 
     updateCanvasSize();
@@ -56,11 +54,16 @@ export default function GameBoard() {
     if (canvas === null) return;
     const context = canvas.getContext("2d");
     if (context === null) return;
-
-    const game = new TwistGame(context);
-    gameSingletonHolder.game = game;
-
     // context.translate(0, 100);
+
+    let game = gameSingletonHolder.game;
+    console.log("game exist:", game);
+
+    if (!game) {
+      console.log("no game");
+      game = new TwistGame(context);
+      gameSingletonHolder.game = game;
+    }
 
     game.startGameLoop();
 

@@ -57,6 +57,10 @@ function drawJewelImage(context: CanvasRenderingContext2D, jewel: Jewel) {
   const imagePath = iconFolderPath + JEWEL_COLOR_FILE_PATHS[jewel.jewelColor];
   const image = imageManager.cachedImages[imagePath];
 
+  if (!(image instanceof Image)) {
+    console.log("no image");
+  }
+
   if (image instanceof Image) {
     const aspectRatio = image.width / image.height;
     const desiredHeight = useGameStore.getState().jewelDiameter;
@@ -92,24 +96,32 @@ function drawSpecialJewelSymbol(
   if (imagePath === undefined)
     throw new Error("fire indicator image path not found");
   const image = imageManager.cachedImages[imagePath];
-  if (!(image instanceof Image))
-    throw new Error("special jewel indicator image not found");
-  const aspectRatio = image.width / image.height;
+  if (image instanceof Image) {
+    const aspectRatio = image.width / image.height;
 
-  const desiredHeight =
-    (useGameStore.getState().jewelDiameter / 2) * animatedSymbolScaling;
-  const desiredWidth = desiredHeight * aspectRatio;
-  context.beginPath();
-  context.arc(x, y, useGameStore.getState().jewelDiameter / 4, 0, Math.PI * 2);
-  context.fillStyle = "black";
-  context.fill();
-  context.drawImage(
-    image,
-    x - desiredWidth / 2,
-    y - desiredHeight / 2,
-    desiredWidth,
-    desiredHeight
-  );
+    const desiredHeight =
+      (useGameStore.getState().jewelDiameter / 2) * animatedSymbolScaling;
+    const desiredWidth = desiredHeight * aspectRatio;
+    context.beginPath();
+    context.arc(
+      x,
+      y,
+      useGameStore.getState().jewelDiameter / 4,
+      0,
+      Math.PI * 2
+    );
+    context.fillStyle = "black";
+    context.fill();
+    context.drawImage(
+      image,
+      x - desiredWidth / 2,
+      y - desiredHeight / 2,
+      desiredWidth,
+      desiredHeight
+    );
+  } else {
+    context.fillRect(x, y, 10, 10);
+  }
 }
 
 function drawJewelCount(

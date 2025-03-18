@@ -37,7 +37,7 @@ export default function HighScoreDisplay() {
   return (
     <div
       className="w-full border-2 border-theme p-2 flex "
-      style={{ flex: "1 1 1px;" }}
+      style={{ flex: "1 1 1px" }}
     >
       <div className="w-1/2 max-w-1/2">
         <h3 className="text-xl text-theme">High Scores</h3>
@@ -89,7 +89,7 @@ export default function HighScoreDisplay() {
             const isAvailable = allUnlocksAvailable || requiredScoreMet;
 
             return (
-              <li className="relative mr-2 mb-2">
+              <li className="relative mr-2 mb-2" key={iconSet}>
                 <button
                   className="disabled:opacity-50"
                   disabled={!isAvailable}
