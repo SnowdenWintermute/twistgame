@@ -8,8 +8,6 @@ import { GridRefiller } from "./grid-refiller";
 import { chooseRandomFromArray, iterateNumericEnum } from "./utils";
 import { JewelColor, JewelType } from "./jewel/jewel-consts";
 import { useGameStore } from "./stores/game-store";
-import { plainToInstance } from "class-transformer";
-import { stringify, parse } from "flatted";
 import { Point } from "./types";
 
 export class TwistGame {
@@ -168,18 +166,23 @@ export class TwistGame {
         colIndex < GRID_CELL_DIMENSIONS.ROWS;
         colIndex += 1
       ) {
-        const jewel = parsed[rowIndex]![colIndex];
+        const jewel = parsed[rowIndex]![colIndex] as Jewel;
         if (jewel === undefined) throw new Error("no expected jewel");
-        parsed[rowIndex]![colIndex] = plainToInstance(Jewel, jewel);
-        jewel.pixelPosition = new Point(
-          jewel.pixelPosition.x,
-          jewel.pixelPosition.y
+        parsed[rowIndex]![colIndex] = new Jewel(
+          jewel.jewelColor,
+          jewel.jewelType,
+          jewel.count,
+          new Point(jewel.pixelPosition.x, jewel.pixelPosition.y)
         );
+        const forTesting = parsed[rowIndex]![colIndex] as Jewel;
+        console.log(forTesting.pixelPosition.distance(new Point(0, 0)));
         jewel.animations = [];
       }
     }
     const game = new TwistGame(context);
     game.grid.rows = parsed;
+    game.matchChecker.grid = game.grid;
+    game.gridRefiller.grid = game.grid;
     game.grid.numJewelsRemoved = parsed.numJewelsRemoved;
     return game;
   }

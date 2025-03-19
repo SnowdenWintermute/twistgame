@@ -3,7 +3,7 @@ import { Jewel } from "./jewel";
 
 export class GridRefiller {
   replacements: null | Jewel[][] = null;
-  constructor(private grid: Grid) {}
+  constructor(public grid: Grid) {}
 
   getNumToReplaceInColumn(column: Jewel[]) {
     let numToReplace = 0;

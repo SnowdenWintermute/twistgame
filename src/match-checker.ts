@@ -38,7 +38,7 @@ class MatchCandidate {
 }
 
 export class MatchChecker {
-  constructor(private grid: Grid) {}
+  constructor(public grid: Grid) {}
   checkForMatches() {
     this.grid.getAllJewels().forEach((jewel) => {
       jewel.isPartOfMatch = false;
