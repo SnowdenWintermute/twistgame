@@ -23,6 +23,7 @@ export class TwistGame {
   }
 
   startGameLoop() {
+    console.log("started game loop");
     this.gameLoopStopped = false;
     this.lastAnimationFrameId = requestAnimationFrame((timestamp) => {
       this.tick(timestamp);
@@ -30,6 +31,7 @@ export class TwistGame {
   }
 
   stopGameLoop() {
+    console.log("stopped game loop");
     cancelAnimationFrame(this.lastAnimationFrameId);
     this.gameLoopStopped = true;
   }
@@ -94,7 +96,7 @@ export class TwistGame {
       jewel.animations = animationsToKeep;
     });
 
-    this.grid.drawSelf(this.context);
+    // this.grid.drawSelf(this.context);
 
     jewelsToUpdate.forEach((jewel) => {
       jewel.drawSelf(this.context);

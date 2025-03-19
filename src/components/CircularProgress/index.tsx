@@ -2,16 +2,18 @@ import { useEffect, useRef, useState } from "react";
 
 type Props = {
   thickness: number;
-  percentage: number;
+  normalizedPercentage: number;
   rotateAnimation?: boolean;
 };
 
 export default function CircularProgress({
   thickness = 20,
-  percentage,
+  normalizedPercentage,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [height, setHeight] = useState(1);
+
+  console.log("percentage: ", normalizedPercentage);
 
   useEffect(() => {
     if (svgRef.current?.clientHeight) setHeight(svgRef.current.clientHeight);
@@ -19,8 +21,8 @@ export default function CircularProgress({
 
   const radius = height / 2;
   const dashArray = 2 * Math.PI * radius;
-  const percentHidden = 100 - percentage;
-  const strokeDashoffset = (dashArray / 100) * percentHidden;
+  const percentHidden = 1 - normalizedPercentage;
+  const strokeDashoffset = dashArray * percentHidden;
   return (
     <svg
       ref={svgRef}

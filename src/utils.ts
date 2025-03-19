@@ -143,9 +143,9 @@ export function lerp(start: number, end: number, ratio: number): number {
 }
 export function hexToRgba(hex: string, alpha: number) {
   hex = hex.replace(/^#/, "");
-  let r = parseInt(hex.substring(0, 2), 16);
-  let g = parseInt(hex.substring(2, 4), 16);
-  let b = parseInt(hex.substring(4, 6), 16);
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
@@ -166,4 +166,8 @@ export function enumAsBooleanRecord<T extends number>(items: T[]) {
     toSet[item] = true;
   });
   return toSet;
+}
+
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

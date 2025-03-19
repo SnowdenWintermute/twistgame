@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import { ImageManager } from "./image-manager";
 import {
@@ -45,12 +45,16 @@ function App() {
   useEffect(() => {
     const jewelImageURLs: string[] = [];
 
-    for (const iconSet of iterateNumericEnum(JewelIconSet)) {
-      Object.values(JEWEL_COLOR_FILE_PATHS).forEach((filePath) => {
-        const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[iconSet];
-        jewelImageURLs.push(iconFolderPath + filePath);
-      });
-    }
+    // for (const iconSet of iterateNumericEnum(JewelIconSet)) {
+    //   Object.values(JEWEL_COLOR_FILE_PATHS).forEach((filePath) => {
+    //     const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[selectedIconSet];
+    //     jewelImageURLs.push(iconFolderPath + filePath);
+    //   });
+    // }
+    Object.values(JEWEL_COLOR_FILE_PATHS).forEach((filePath) => {
+      const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[selectedIconSet];
+      jewelImageURLs.push(iconFolderPath + filePath);
+    });
 
     const indicatorURLs = Object.values(JEWEL_TYPE_INDICATOR_URLS);
     const allURLs = jewelImageURLs.concat(indicatorURLs);
@@ -61,16 +65,23 @@ function App() {
       });
     }
 
+    // mutateGameState((state) => {
+    //   state.loading = true;
+    // });
+
+    gameSingletonHolder.game?.stopGameLoop();
     imageManager.loadImages(
       allURLs,
       () => {
+        console.log("load images completed");
         mutateGameState((state) => {
           state.loading = false;
         });
+        gameSingletonHolder.game?.startGameLoop();
       },
       handleProgress
     );
-  }, []);
+  }, [selectedIconSet]);
 
   return (
     <div className={theme === Theme.Dark ? "dark" : "light"}>

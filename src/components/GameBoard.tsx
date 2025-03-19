@@ -7,28 +7,19 @@ import NewGameDialog from "./NewGameDialog";
 import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
 import LoadingSpinner from "./LoadingSpinner";
-import CircularProgress from "./CircularProgress";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
   const canvasSize = useGameStore().canvasSize;
-  const imageLoadingNormalizedPercent =
-    useGameStore().imageLoadingNormalizedPercent;
   const mutateState = useGameStore().mutateState;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [percentLoadTest, setPercentLoadTest] = useState(0);
   const timeoutRef = useRef<number>(null);
 
   useEffect(() => {
-    // function increaseTestPercent() {
-    //   if (percentLoadTest >= 1) return;
-    //   setPercentLoadTest(percentLoadTest + 0.001);
-    // }
     timeoutRef.current = setTimeout(() => {
       setPercentLoadTest(percentLoadTest + 0.1);
     }, 200);
 
-    // increaseTestPercent();
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -94,19 +85,14 @@ export default function GameBoard() {
   }, [loading]);
 
   return (
-    <div className="all-grids">
+    <div className="relative w-fit">
       {loading ? (
-        // loading
         <div
           className="flex items-center justify-center"
           style={{ height: canvasSize.height, width: canvasSize.width }}
         >
           <div className="h-10 w-10">
-            <CircularProgress
-              thickness={4}
-              percentage={Math.floor(imageLoadingNormalizedPercent * 100)}
-              // percentage={percentLoadTest * 100}
-            />
+            <LoadingSpinner />
           </div>
         </div>
       ) : (
