@@ -1,25 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { ImageManager } from "./image-manager";
 import {
   JEWEL_COLOR_FILE_PATHS,
   JEWEL_ICON_SET_FOLDER_PATHS,
   JEWEL_TYPE_INDICATOR_URLS,
-  JewelIconSet,
 } from "./jewel/jewel-consts";
 import { TwistGame } from "./game";
 import GameBoard from "./components/GameBoard";
 import { enableMapSet } from "immer";
 import { Theme, useGameStore } from "./stores/game-store";
 import DebugDisplay from "./components/DebugDisplay";
-import HorizontalDivider from "./Divider";
 import ScoreDisplay from "./components/ScoreDisplay";
-import ThemeSelectionButton from "./components/ThemeSelectionButton";
 import HotkeyButton from "./components/HotkeyButton";
 import HighScoreDisplay from "./components/HighScoreDisplay";
-import { iterateNumericEnum } from "./utils";
 import AttributionList from "./components/AttributionList";
-import AttributionIcon from "./assets/quotes.svg?react";
+import Header from "./components/Header";
 
 // for immer to be able to use map and set
 enableMapSet();
@@ -90,35 +86,14 @@ function App() {
       >
         <div className="flex justify-center">
           <div className="flex justify-center flex-col w-full max-w-[830px] p-4 pt-0">
-            <div className="py-4 flex flex-col items-center justify-center relative w-full">
-              <HorizontalDivider extraStyles="h-[4px]" />
-              <div className="flex justify-between items-center w-full px-4">
-                <HotkeyButton
-                  onClick={() => {
-                    mutateGameState((state) => {
-                      state.showAttributions = !state.showAttributions;
-                    });
-                  }}
-                  className=""
-                >
-                  <div className="h-8">
-                    <AttributionIcon className="fill-theme h-full" />
-                  </div>
-                </HotkeyButton>
-                <h1 className="text-theme text-3xl font-bold pt-2 pb-2">
-                  Four Body Problem
-                </h1>
-                <div className="">
-                  <ThemeSelectionButton />
-                </div>
-              </div>
-              <HorizontalDivider extraStyles={"h-[4px]"} />
-            </div>
+            <Header />
             <div className="flex justify-center mb-2">
               <ScoreDisplay />
               <GameBoard />
             </div>
-            <HighScoreDisplay />
+            <div className="max-md:hidden">
+              <HighScoreDisplay />
+            </div>
           </div>
         </div>
         <div className="hidden">
@@ -138,7 +113,7 @@ function App() {
         {showDebug && <DebugDisplay />}
       </div>
       {showAttributions && (
-        <div className="absolute top-0 left-0 border border-theme p-2 bg-theme">
+        <div className="absolute top-0 left-0 border border-theme p-2 bg-theme max-w-screen max-h-screen overflow-auto">
           <AttributionList />
         </div>
       )}

@@ -78,7 +78,7 @@ export default function HighScoreDisplay() {
       <div className="w-1/2">
         <h3 className="text-xl text-theme">Unlocked Themes</h3>
         <HorizontalDivider extraStyles="h-[2px] bg-theme mb-2" />
-        <ul className="flex">
+        <ul className="flex flex-wrap">
           {iterateNumericEnum(JewelIconSet).map((iconSet, i) => {
             const requiredTopScore = i * 200;
             const higestScoreOption = sortedScores[0];
@@ -108,7 +108,7 @@ export default function HighScoreDisplay() {
                 </button>
 
                 {!isAvailable && (
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-theme">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-theme max-md:text-sm">
                     {requiredTopScore}
                   </div>
                 )}

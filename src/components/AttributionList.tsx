@@ -17,7 +17,7 @@ export default function AttributionList() {
   return (
     <div className="text-theme bg-theme p-2">
       <HotkeyButton
-        className="absolute top-2 right-2 h-6 border border-theme p-1"
+        className="absolute top-2 z-30 right-2 h-6 border border-theme p-1"
         hotkeys={["Escape"]}
         onClick={() =>
           mutateGameState((state) => {

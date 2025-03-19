@@ -1,8 +1,8 @@
 import { JEWEL_TYPE_TIPS } from "../jewel/jewel-consts";
 import { useGameStore } from "../stores/game-store";
 import GearIcon from "../assets/settings-icon.svg?react";
-import Settings from "./Settings";
 import StyledCheckbox from "./StyledCheckbox";
+import SettingsDialog from "./SettingsDialog";
 
 export default function ScoreDisplay() {
   const numJewelsRemoved = useGameStore().numJewelsRemoved;
@@ -13,7 +13,7 @@ export default function ScoreDisplay() {
 
   return (
     <div className="w-72 max-md:hidden border-[3px] border-theme mr-2 p-2 pt-4 relative flex flex-col justify-between">
-      <Settings />
+      <SettingsDialog />
       <button
         className="absolute top-2 right-2 h-6"
         onClick={() =>

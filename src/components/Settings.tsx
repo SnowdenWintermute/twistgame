@@ -1,9 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { gameSingletonHolder } from "../App";
 import { useGameStore } from "../stores/game-store";
-import XShape from "../assets/x-shape.svg?react";
 import HorizontalDivider from "../Divider";
-import HotkeyButton from "./HotkeyButton";
 import FormInput from "./FormInput";
 import {
   ROTATION_ANIMATION_DURATION,
@@ -25,8 +23,11 @@ import StyledCheckbox from "./StyledCheckbox";
 import { GameOptions } from "../game-options";
 
 export default function Settings() {
-  const viewingSettings = useGameStore().viewingSettings;
   const mutateGameState = useGameStore().mutateState;
+  const viewingSettings = useGameStore().viewingSettings;
+  const showMobileMenu = useGameStore().showMobileMenu;
+  const shouldPause = showMobileMenu || viewingSettings;
+
   const rotationAnimationDuration = useGameStore(
     (state) => state.gameOptions.rotationAnimationDuration
   );
@@ -52,16 +53,16 @@ export default function Settings() {
   );
 
   useEffect(() => {
+    console.log("should pause");
     const { game } = gameSingletonHolder;
     if (!game) return;
-
-    if (viewingSettings) game.stopGameLoop();
+    if (shouldPause) game.stopGameLoop();
     else game.startGameLoop();
 
     return () => {
       game.startGameLoop();
     };
-  }, [viewingSettings]);
+  }, [shouldPause]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -83,6 +84,7 @@ export default function Settings() {
         .map(([item, _]) => item);
 
       state.viewingSettings = false;
+      state.showMobileMenu = false;
       localStorage.setItem("settings", JSON.stringify(state.gameOptions));
     });
   }
@@ -136,22 +138,7 @@ export default function Settings() {
   }
 
   return (
-    <dialog
-      open={viewingSettings}
-      className="absolute top-0 left-0 z-10 text-theme bg-theme border-theme p-4 w-full h-full max-h-full overflow-auto"
-    >
-      <HotkeyButton
-        className="absolute top-2 right-2 h-6 border border-theme p-1"
-        hotkeys={["Escape"]}
-        disabled={!viewingSettings}
-        onClick={() =>
-          mutateGameState((state) => {
-            state.viewingSettings = !state.viewingSettings;
-          })
-        }
-      >
-        <XShape className="fill-theme h-full" />
-      </HotkeyButton>
+    <>
       <h3 className="text-2xl text-center">Settings</h3>
       <HorizontalDivider extraStyles="h-[1px] mt-2 mb-2" />
       <form onSubmit={handleSubmit}>
@@ -242,6 +229,6 @@ export default function Settings() {
           <StyledButton type="submit" title="Apply" extraStyles="w-1/2 mr-l" />
         </div>
       </form>
-    </dialog>
+    </>
   );
 }

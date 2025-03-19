@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { SelectGrid } from "./SelectGrid";
 import { useGameStore } from "../stores/game-store";
 import { TwistGame } from "../game";
@@ -7,25 +7,12 @@ import NewGameDialog from "./NewGameDialog";
 import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
 import LoadingSpinner from "./LoadingSpinner";
+import MobileMenu from "./MobileMenu";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
   const canvasSize = useGameStore().canvasSize;
   const mutateState = useGameStore().mutateState;
-  const [percentLoadTest, setPercentLoadTest] = useState(0);
-  const timeoutRef = useRef<number>(null);
-
-  useEffect(() => {
-    timeoutRef.current = setTimeout(() => {
-      setPercentLoadTest(percentLoadTest + 0.1);
-    }, 200);
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, [percentLoadTest]);
 
   useEffect(() => {
     function updateCanvasSize() {
@@ -97,6 +84,7 @@ export default function GameBoard() {
         </div>
       ) : (
         <>
+          <MobileMenu />
           <NewGameDialog />
           <canvas
             height={canvasSize.height}

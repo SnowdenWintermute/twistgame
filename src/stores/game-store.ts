@@ -34,6 +34,7 @@ export class GameState {
   canvasSize: Dimensions = new Dimensions(0, 0);
   jewelDiameter: number = 0;
   imageLoadingNormalizedPercent: number = 0;
+  showMobileMenu: boolean = true;
 
   constructor(
     public mutateState: MutateState<GameState>,
