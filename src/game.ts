@@ -1,4 +1,4 @@
-import { RENDER_INTERVAL } from "./app-consts";
+import { GRID_CELL_DIMENSIONS, RENDER_INTERVAL } from "./app-consts";
 import { GameEventManager } from "./game-event-manager";
 import { Jewel } from "./jewel";
 import { JewelAnimation } from "./jewel/animation";
@@ -8,6 +8,9 @@ import { GridRefiller } from "./grid-refiller";
 import { chooseRandomFromArray, iterateNumericEnum } from "./utils";
 import { JewelColor, JewelType } from "./jewel/jewel-consts";
 import { useGameStore } from "./stores/game-store";
+import { plainToInstance } from "class-transformer";
+import { stringify, parse } from "flatted";
+import { Point } from "./types";
 
 export class TwistGame {
   lastRenderTimestamp: number = 0;
@@ -144,5 +147,40 @@ export class TwistGame {
         this.stopGameLoop();
       }
     });
+  }
+
+  save() {
+    const asString = JSON.stringify(this.grid.rows);
+    localStorage.setItem("gameGrid", asString);
+  }
+
+  static load(context: CanvasRenderingContext2D) {
+    const existingGameJson = localStorage.getItem("gameGrid");
+    if (!existingGameJson) return;
+    const parsed = JSON.parse(existingGameJson);
+    for (
+      let rowIndex = 0;
+      rowIndex < GRID_CELL_DIMENSIONS.ROWS;
+      rowIndex += 1
+    ) {
+      for (
+        let colIndex = 0;
+        colIndex < GRID_CELL_DIMENSIONS.ROWS;
+        colIndex += 1
+      ) {
+        const jewel = parsed[rowIndex]![colIndex];
+        if (jewel === undefined) throw new Error("no expected jewel");
+        parsed[rowIndex]![colIndex] = plainToInstance(Jewel, jewel);
+        jewel.pixelPosition = new Point(
+          jewel.pixelPosition.x,
+          jewel.pixelPosition.y
+        );
+        jewel.animations = [];
+      }
+    }
+    const game = new TwistGame(context);
+    game.grid.rows = parsed;
+    game.grid.numJewelsRemoved = parsed.numJewelsRemoved;
+    return game;
   }
 }

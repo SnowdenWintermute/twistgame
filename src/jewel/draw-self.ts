@@ -8,6 +8,7 @@ import {
   JEWEL_ICON_SET_FOLDER_PATHS,
   JEWEL_TYPE_INDICATOR_URLS,
   JEWEL_TYPE_STRINGS,
+  JewelIconSet,
   JewelType,
 } from "./jewel-consts";
 
@@ -49,9 +50,24 @@ function getPulsingAnimationScaledValue(jewelType: JewelType) {
   return 0.75 + scalingFactor * 0.5;
 }
 
+const ICON_SETS_THAT_NEED_PADDING = [
+  JewelIconSet.Fruits,
+  JewelIconSet.Summer,
+  JewelIconSet.Landscapes,
+  JewelIconSet.DigitalNomad,
+  JewelIconSet.ColorCircles,
+  JewelIconSet.AbstractFlowers,
+];
+
 function drawJewelImage(context: CanvasRenderingContext2D, jewel: Jewel) {
   const { x, y } = jewel.pixelPosition;
+  const jewelDiameter = useGameStore.getState().jewelDiameter;
   const selectedIconSet = useGameStore.getState().gameOptions.selectedIconSet;
+  const extraPadding = ICON_SETS_THAT_NEED_PADDING.includes(
+    useGameStore.getState().gameOptions.selectedIconSet
+  )
+    ? jewelDiameter / 10
+    : 0;
 
   const iconFolderPath = JEWEL_ICON_SET_FOLDER_PATHS[selectedIconSet];
   const imagePath = iconFolderPath + JEWEL_COLOR_FILE_PATHS[jewel.jewelColor];
@@ -63,8 +79,8 @@ function drawJewelImage(context: CanvasRenderingContext2D, jewel: Jewel) {
 
   if (image instanceof Image) {
     const aspectRatio = image.width / image.height;
-    const desiredHeight = useGameStore.getState().jewelDiameter;
-    const desiredWidth = useGameStore.getState().jewelDiameter * aspectRatio;
+    const desiredHeight = jewelDiameter - extraPadding;
+    const desiredWidth = jewelDiameter * aspectRatio;
     context.globalAlpha = jewel.opacity;
     context.drawImage(
       image,

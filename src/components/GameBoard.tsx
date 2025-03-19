@@ -60,7 +60,9 @@ export default function GameBoard() {
     let game = gameSingletonHolder.game;
 
     if (!game) {
-      game = new TwistGame(context);
+      const loadedGameOption = TwistGame.load(context);
+      if (loadedGameOption) game = loadedGameOption;
+      else game = new TwistGame(context);
       gameSingletonHolder.game = game;
     }
 

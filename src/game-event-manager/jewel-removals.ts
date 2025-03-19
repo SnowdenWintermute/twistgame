@@ -146,12 +146,14 @@ export class JewelRemovalsGameEvent extends GameEvent {
   onComplete(): void {
     const { grid, gameEventManager } = this.game;
     grid.updateScore(this.numJewelsMarkedForRemoval);
+
     useGameStore.getState().mutateState((state) => {
       state.currentLevel = grid.getCurrentLevel();
     });
 
     this.game.checkForGameOver();
     if (useGameStore.getState().isGameOver) {
+      localStorage.removeItem("game");
       return;
     }
 

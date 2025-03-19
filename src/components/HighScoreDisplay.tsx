@@ -18,9 +18,18 @@ const randomFilePaths = iterateNumericEnum(JewelIconSet).map((iconSet, i) => {
 });
 
 export default function HighScoreDisplay() {
+  const numJewelsRemoved = useGameStore().numJewelsRemoved;
   const highScores = useGameStore().highScores;
   const allUnlocksAvailable = useGameStore().gameOptions.unlockAllSets;
   const sortedScores = cloneDeep(highScores).sort((a, b) => b.score - a.score);
+  const higestScoreOption = sortedScores[0];
+  const unfinishedGameHighScoreOption = localStorage.getItem(
+    "unfinishedGameHighScore"
+  );
+  const unfinishedGameHighScore = unfinishedGameHighScoreOption
+    ? parseInt(unfinishedGameHighScoreOption)
+    : 0;
+
   const mutateGameState = useGameStore().mutateState;
 
   useEffect(() => {
@@ -81,10 +90,12 @@ export default function HighScoreDisplay() {
         <ul className="flex flex-wrap">
           {iterateNumericEnum(JewelIconSet).map((iconSet, i) => {
             const requiredTopScore = i * 200;
-            const higestScoreOption = sortedScores[0];
             let requiredScoreMet = true;
             if (!higestScoreOption) requiredScoreMet = i === 0;
             else requiredScoreMet = higestScoreOption.score >= requiredTopScore;
+            if (unfinishedGameHighScore >= requiredTopScore)
+              requiredScoreMet = true;
+            if (numJewelsRemoved >= requiredTopScore) requiredScoreMet = true;
 
             const isAvailable = allUnlocksAvailable || requiredScoreMet;
 

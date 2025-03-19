@@ -30,6 +30,13 @@ function DebugDisplay() {
       <div style={{ padding: "2px" }}>
         isGameOver: {isGameOver ? "true" : "false"}
       </div>
+      <button
+        onClick={() => {
+          localStorage.clear();
+        }}
+      >
+        Clear local storage
+      </button>
 
       <StyledCheckbox
         title={"enable all icon sets"}

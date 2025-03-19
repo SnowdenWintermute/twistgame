@@ -85,7 +85,7 @@ function App() {
         className={`h-screen max-h-screen text-theme bg-theme overflow-auto`}
       >
         <div className="flex justify-center">
-          <div className="flex justify-center flex-col w-full max-w-[830px] p-4 pt-0">
+          <div className="flex justify-center flex-col w-full max-w-[830px] max-sm:max-w-[500px] p-4 pt-0 max-sm:px-0">
             <Header />
             <div className="flex justify-center mb-2">
               <ScoreDisplay />
@@ -113,7 +113,7 @@ function App() {
         {showDebug && <DebugDisplay />}
       </div>
       {showAttributions && (
-        <div className="absolute top-0 left-0 border border-theme p-2 bg-theme max-w-screen max-h-screen overflow-auto">
+        <div className="absolute z-30 top-0 left-0 border border-theme p-2 bg-theme max-w-screen max-h-screen overflow-auto">
           <AttributionList />
         </div>
       )}

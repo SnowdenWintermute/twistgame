@@ -1,8 +1,10 @@
 import {
+  BASE_LEVEL_SCORE,
   COUNTING_JEWEL_BASE_START_COUNT,
   GRID_CELL_DIMENSIONS,
   GRID_PIXEL_DIMENSIONS,
   JEWEL_TYPE_CHANCES_BY_LEVEL,
+  LEVEL_SCORE_GROWTH_FACTOR,
 } from "../app-consts";
 import { Jewel } from "../jewel";
 import { Point } from "../types";
@@ -47,17 +49,25 @@ export class Grid {
     useGameStore.getState().mutateState((state) => {
       state.numJewelsRemoved = this.numJewelsRemoved;
     });
+    const preExistingHigestScoreString = localStorage.getItem(
+      "unfinishedGameHighScore"
+    );
+    const preExistingHigestScore = preExistingHigestScoreString
+      ? parseInt(preExistingHigestScoreString)
+      : 0;
+    if (preExistingHigestScore < this.numJewelsRemoved)
+      localStorage.setItem(
+        "unfinishedGameHighScore",
+        this.numJewelsRemoved.toString()
+      );
   }
   getCurrentLevel() {
-    const basePoints = 10;
-    const growthFactor = 2;
-
     let level = 0;
-    let requiredPoints = basePoints;
+    let requiredPoints = BASE_LEVEL_SCORE;
 
     while (this.numJewelsRemoved >= requiredPoints) {
       level++;
-      requiredPoints *= growthFactor;
+      requiredPoints *= LEVEL_SCORE_GROWTH_FACTOR;
     }
 
     return level;
@@ -238,4 +248,16 @@ export function getJewelPixelPosition(row: number, column: number) {
   const x = columnWidth * column + columnWidth / 2;
   const y = rowHeight * row + rowHeight / 2;
   return new Point(x, y);
+}
+
+export function getNextLevelRequiredPoints(numJewelsRemoved: number) {
+  let requiredPoints = BASE_LEVEL_SCORE;
+
+  while (numJewelsRemoved >= requiredPoints) {
+    requiredPoints *= LEVEL_SCORE_GROWTH_FACTOR;
+  }
+
+  const nextLevelPointsRequired = requiredPoints;
+
+  return nextLevelPointsRequired;
 }

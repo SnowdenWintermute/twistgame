@@ -3,6 +3,7 @@ import { useGameStore } from "../stores/game-store";
 import GearIcon from "../assets/settings-icon.svg?react";
 import StyledCheckbox from "./StyledCheckbox";
 import SettingsDialog from "./SettingsDialog";
+import { getNextLevelRequiredPoints } from "../grid";
 
 export default function ScoreDisplay() {
   const numJewelsRemoved = useGameStore().numJewelsRemoved;
@@ -26,7 +27,9 @@ export default function ScoreDisplay() {
       </button>
       <div>
         <h3 className="text-2xl text-center">Score</h3>
-        <h3 className="text-2xl text-center">{numJewelsRemoved}</h3>
+        <h3 className="text-2xl text-center">
+          {numJewelsRemoved} / {getNextLevelRequiredPoints(numJewelsRemoved)}
+        </h3>
         <h3 className="text-2xl text-center">Level</h3>
         <h3 className="text-2xl text-center">{currentLevel}</h3>
         {showTips && (
@@ -47,6 +50,10 @@ export default function ScoreDisplay() {
             mutateGameState((state) => {
               state.gameOptions.showTips = !state.gameOptions.showTips;
               console.log("set show tips to", state.gameOptions.showTips);
+              localStorage.setItem(
+                "settings",
+                JSON.stringify(state.gameOptions)
+              );
             });
           }}
         />
