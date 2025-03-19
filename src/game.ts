@@ -96,7 +96,7 @@ export class TwistGame {
       jewel.animations = animationsToKeep;
     });
 
-    // this.grid.drawSelf(this.context);
+    this.grid.drawSelf(this.context);
 
     jewelsToUpdate.forEach((jewel) => {
       jewel.drawSelf(this.context);
