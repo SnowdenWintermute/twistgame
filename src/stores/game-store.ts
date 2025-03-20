@@ -35,6 +35,7 @@ export class GameState {
   jewelDiameter: number = 0;
   imageLoadingNormalizedPercent: number = 0;
   showMobileMenu: boolean = false;
+  showResetGameDialog: boolean = false;
 
   constructor(
     public mutateState: MutateState<GameState>,

@@ -8,6 +8,7 @@ import { GRID_CELL_DIMENSIONS, GRID_PIXEL_DIMENSIONS } from "../app-consts";
 import { Dimensions, getJewelPixelPosition } from "../grid";
 import LoadingSpinner from "./LoadingSpinner";
 import MobileMenu from "./MobileMenu";
+import ResetGameDialog from "./ResetGameDialog";
 
 export default function GameBoard() {
   const loading = useGameStore().loading;
@@ -88,6 +89,7 @@ export default function GameBoard() {
         <>
           <MobileMenu />
           <NewGameDialog />
+          <ResetGameDialog />
           <canvas
             height={canvasSize.height}
             width={canvasSize.width}

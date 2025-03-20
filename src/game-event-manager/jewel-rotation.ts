@@ -18,7 +18,6 @@ export class QuartetRotationGameEvent extends GameEvent {
   }
 
   start(): void {
-    this.game.save();
     const { grid } = this.game;
     // "justMoved" is used to determine which central jewel should become
     // the fire jewel when a match 4 is made. We'll reset them all now

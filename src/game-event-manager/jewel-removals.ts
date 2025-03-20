@@ -162,6 +162,7 @@ export class JewelRemovalsGameEvent extends GameEvent {
     });
     if (this.numJewelsMarkedForRemoval > 0)
       gameEventManager.addEvent(new ColumnRefillsGameEvent(this.game));
+    else this.game.save();
   }
 }
 

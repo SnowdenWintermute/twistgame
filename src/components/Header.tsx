@@ -14,7 +14,7 @@ export default function Header() {
         <h1 className="text-theme text-3xl font-bold pt-2 pb-2 max-sm:hidden">
           Four Body Problem
         </h1>
-        <div className="sm:hidden">
+        <div className="md:hidden">
           <MobileScoreView />
         </div>
 

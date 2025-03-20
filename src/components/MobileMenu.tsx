@@ -27,7 +27,7 @@ export default function MobileMenu() {
         hotkeys={["Escape"]}
         onClick={() =>
           mutateGameState((state) => {
-            state.showMobileMenu = !state.showMobileMenu;
+            state.showMobileMenu = false;
           })
         }
       >

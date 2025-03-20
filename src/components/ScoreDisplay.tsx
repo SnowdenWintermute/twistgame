@@ -6,6 +6,7 @@ import SettingsDialog from "./SettingsDialog";
 import { getNextLevelRequiredPoints } from "../grid";
 
 export default function ScoreDisplay() {
+  const loading = useGameStore().loading;
   const numJewelsRemoved = useGameStore().numJewelsRemoved;
   const currentLevel = useGameStore().currentLevel;
   const jewelTypesToDescribe = useGameStore().jewelTypesToDescribe;
@@ -26,12 +27,17 @@ export default function ScoreDisplay() {
         <GearIcon className="fill-theme h-full" />
       </button>
       <div>
-        <h3 className="text-2xl text-center">Score</h3>
-        <h3 className="text-2xl text-center">
-          {numJewelsRemoved} / {getNextLevelRequiredPoints(numJewelsRemoved)}
-        </h3>
-        <h3 className="text-2xl text-center">Level</h3>
-        <h3 className="text-2xl text-center">{currentLevel}</h3>
+        {!loading && (
+          <>
+            <h3 className="text-2xl text-center">Score</h3>
+            <h3 className="text-2xl text-center">
+              {numJewelsRemoved} /{" "}
+              {getNextLevelRequiredPoints(numJewelsRemoved)}
+            </h3>
+            <h3 className="text-2xl text-center">Level</h3>
+            <h3 className="text-2xl text-center">{currentLevel}</h3>
+          </>
+        )}
         {showTips && (
           <ul>
             {jewelTypesToDescribe.map((jewelType) => (
@@ -41,7 +47,7 @@ export default function ScoreDisplay() {
         )}
       </div>
 
-      <div>
+      <div className="flex justify-between items-end">
         <StyledCheckbox
           title={"Hide tips"}
           isChecked={!showTips}
@@ -57,6 +63,16 @@ export default function ScoreDisplay() {
             });
           }}
         />
+        <button
+          className="border border-theme p-2"
+          onClick={() => {
+            mutateGameState((state) => {
+              state.showResetGameDialog = !state.showResetGameDialog;
+            });
+          }}
+        >
+          Reset Game
+        </button>
       </div>
     </div>
   );

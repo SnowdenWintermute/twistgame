@@ -93,5 +93,6 @@ export class ColumnRefillsGameEvent extends GameEvent {
 
     if (matches.length > 0)
       gameEventManager.addEvent(new JewelRemovalsGameEvent(this.game));
+    else this.game.save();
   }
 }

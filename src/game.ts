@@ -2,7 +2,7 @@ import { GRID_CELL_DIMENSIONS, RENDER_INTERVAL } from "./app-consts";
 import { GameEventManager } from "./game-event-manager";
 import { Jewel } from "./jewel";
 import { JewelAnimation } from "./jewel/animation";
-import { Grid } from "./grid";
+import { getJewelPixelPosition, Grid } from "./grid";
 import { MatchChecker } from "./match-checker";
 import { GridRefiller } from "./grid-refiller";
 import { chooseRandomFromArray, iterateNumericEnum } from "./utils";
@@ -39,17 +39,22 @@ export class TwistGame {
 
   reset() {
     this.stopGameLoop();
+
+    localStorage.removeItem("numJewelsRemoved");
+    localStorage.removeItem("gameGrid");
     const { grid } = this;
 
     useGameStore.getState().mutateState((state) => {
       state.numJewelsRemoved = 0;
       state.isGameOver = false;
       state.currentLevel = 0;
+      state.showResetGameDialog = false;
     });
 
     grid.getAllJewels().forEach((jewel) => {
       jewel.opacity = 0;
     });
+    grid.numJewelsRemoved = 0;
 
     grid.rows = grid.makeGrid(
       grid.cellDimensions.height,
@@ -150,6 +155,10 @@ export class TwistGame {
   save() {
     const asString = JSON.stringify(this.grid.rows);
     localStorage.setItem("gameGrid", asString);
+    localStorage.setItem(
+      "numJewelsRemoved",
+      this.grid.numJewelsRemoved.toString()
+    );
   }
 
   static load(context: CanvasRenderingContext2D) {
@@ -172,10 +181,8 @@ export class TwistGame {
           jewel.jewelColor,
           jewel.jewelType,
           jewel.count,
-          new Point(jewel.pixelPosition.x, jewel.pixelPosition.y)
+          getJewelPixelPosition(rowIndex, colIndex)
         );
-        const forTesting = parsed[rowIndex]![colIndex] as Jewel;
-        console.log(forTesting.pixelPosition.distance(new Point(0, 0)));
         jewel.animations = [];
       }
     }
@@ -183,7 +190,15 @@ export class TwistGame {
     game.grid.rows = parsed;
     game.matchChecker.grid = game.grid;
     game.gridRefiller.grid = game.grid;
-    game.grid.numJewelsRemoved = parsed.numJewelsRemoved;
+    const numJewelsRemoved = localStorage.getItem("numJewelsRemoved");
+    const numJewelsRemovedAsNumber = numJewelsRemoved
+      ? parseInt(numJewelsRemoved)
+      : 0;
+    game.grid.numJewelsRemoved = numJewelsRemovedAsNumber;
+    useGameStore.getState().mutateState((state) => {
+      state.numJewelsRemoved = numJewelsRemovedAsNumber;
+      state.currentLevel = game.grid.getCurrentLevel();
+    });
     return game;
   }
 }
